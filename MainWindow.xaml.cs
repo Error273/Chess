@@ -19,6 +19,7 @@ namespace chess_wpf_test
         public MainWindow()
         {
             InitializeComponent();
+            // TEST
         }
     }
 }
