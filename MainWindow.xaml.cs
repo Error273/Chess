@@ -20,6 +20,7 @@ namespace chess_wpf_test
         {
             InitializeComponent();
             // TEST
+            //TEST2
         }
     }
 }
