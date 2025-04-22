@@ -1,0 +1,12 @@
+﻿<!-- Views/GameView.xaml -->
+<UserControl x:Class="chess_wpf_test.Views.GameView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- сюда будем привязывать отрисовку доски -->
+    <Grid Background="LightCoral">
+        <TextBlock Text="Здесь будет игра" 
+               HorizontalAlignment="Center" VerticalAlignment="Center"
+               FontSize="24" Foreground="White"/>
+    </Grid>
+
+</UserControl>

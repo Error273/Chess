@@ -1,0 +1,9 @@
+﻿<!-- Views/MainMenuView.xaml -->
+<UserControl x:Class="chess_wpf_test.Views.MainMenuView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+        <Button Content="Новая игра" Width="150" Command="{Binding NewGameCommand}" />
+        <Button Content="Выход"        Width="150" Command="{Binding ExitCommand}" />
+    </StackPanel>
+</UserControl>

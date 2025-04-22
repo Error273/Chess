@@ -1,0 +1,16 @@
+﻿<Window x:Class="chess_wpf_test.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:chess_wpf_test.ViewModels"
+        Title="Chess WPF Test" Height="450" Width="600">
+
+    <!-- 2.1 DataContext — главный VM -->
+    <Window.DataContext>
+        <vm:MainViewModel />
+    </Window.DataContext>
+
+    <Grid>
+        <!-- 2.2 Точка вставки текущего View по типу VM -->
+        <ContentControl Content="{Binding CurrentViewModel}" />
+    </Grid>
+</Window>
