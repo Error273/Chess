@@ -57,7 +57,7 @@ namespace Chess.Model
 {
     public class Pawn : Figure
     {
-        private bool hasMoved;
+        public bool hasMoved;
 
         public Pawn(int x, int y, PieceColor color) : base(x, y, color)
         {
@@ -356,7 +356,7 @@ namespace Chess.Model
 {
     public class King : Figure
     {
-        private bool hasMoved;
+        public bool hasMoved;
 
         public King(int x, int y, PieceColor color) : base(x, y, color)
         {
