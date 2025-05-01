@@ -8,4 +8,27 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Assets\background.mp3" />
+    <None Remove="Assets\happy_cat.gif" />
+    <None Remove="Assets\sad_cat.gif" />
+    <None Remove="Assets\sad_cat2.gif" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="WpfAnimatedGif" Version="2.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Assets\background.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\happy_cat.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\sad_cat.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>
