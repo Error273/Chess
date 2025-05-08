@@ -2,20 +2,36 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              SizeChanged="UserControl_SizeChanged">
-    <Grid>
-        <!-- Шахматная доска с розово-зелеными клетками -->
-        <Viewbox x:Name="BoardViewbox" 
+	<Grid>
+		<Viewbox x:Name="BoardViewbox"
                 Stretch="Uniform"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center">
-            <Grid x:Name="ChessBoardGrid" 
-                 Background="Black"  
-                Width="400" 
+			<Grid x:Name="ChessBoard"
+                 Background="Transparent"
+                 Width="400"
                  Height="400">
-                <UniformGrid x:Name="ChessBoard" 
-                            Rows="8" 
-                            Columns="8"/>
-            </Grid>
-        </Viewbox>
-    </Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="*"/>
+					<RowDefinition Height="*"/>
+					<RowDefinition Height="*"/>
+					<RowDefinition Height="*"/>
+					<RowDefinition Height="*"/>
+					<RowDefinition Height="*"/>
+					<RowDefinition Height="*"/>
+					<RowDefinition Height="*"/>
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="*"/>
+				</Grid.ColumnDefinitions>
+			</Grid>
+		</Viewbox>
+	</Grid>
 </UserControl>
