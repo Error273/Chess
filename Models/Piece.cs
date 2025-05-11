@@ -46,7 +46,7 @@ namespace Chess.Model
         {
             return x >= 0 && x < 8 && y >= 0 && y < 8;
         }
-        public virtual char Symbol => 'F'; // Буква по умолчанию для абстрактной фигуры
+        public virtual string Symbol => "F"; // Буква по умолчанию для абстрактной фигуры
 
         // Метод для копирования фигуры (если захочется делать симуляции)
         public abstract Figure Clone();
@@ -63,7 +63,7 @@ namespace Chess.Model
         {
             hasMoved = false;
         }
-        public override char Symbol => 'P'; // Pawn
+        public override string Symbol => "P"; // Pawn
         public override bool CanMoveTo(int newX, int newY, Figure?[,] board)
         {
             int direction = Direction();
@@ -122,7 +122,7 @@ namespace Chess.Model
         public Rook(int x, int y, PieceColor color) : base(x, y, color)
         {
         }
-        public override char Symbol => 'R'; // Rook
+        public override string Symbol => "R"; // Rook
         public override bool CanMoveTo(int newX, int newY, Figure?[,] board)
         {
             int dx = newX - X;
@@ -184,7 +184,7 @@ namespace Chess.Model
         public Queen(int x, int y, PieceColor color) : base(x, y, color)
         {
         }
-        public override char Symbol => 'Q'; // Queen
+        public override string Symbol => "Q"; // Queen
         public override bool CanMoveTo(int newX, int newY, Figure?[,] board)
         {
             int dx = newX - X;
@@ -264,7 +264,7 @@ namespace Chess.Model
         public Bishop(int x, int y, PieceColor color) : base(x, y, color)
         {
         }
-        public override char Symbol => 'B'; // Bishop
+        public override string Symbol => "B"; // Bishop
         public override bool CanMoveTo(int newX, int newY, Figure?[,] board)
         {
             int dx = newX - X;
@@ -320,7 +320,7 @@ namespace Chess.Model
         public Knight(int x, int y, PieceColor color) : base(x, y, color)
         {
         }
-        public override char Symbol => 'N'; // Knight (по шахматной нотации)
+        public override string Symbol => "N"; // Knight (по шахматной нотации)
         public override bool CanMoveTo(int newX, int newY, Figure?[,] board)
         {
             int dx = Math.Abs(newX - X);
@@ -362,7 +362,7 @@ namespace Chess.Model
         {
             hasMoved = false;
         }
-        public override char Symbol => 'K'; // King
+        public override string Symbol => "K"; // King
         public override bool CanMoveTo(int newX, int newY, Figure?[,] board)
         {
             int dx = Math.Abs(newX - X);
