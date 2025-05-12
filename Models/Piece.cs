@@ -38,7 +38,7 @@ namespace Chess.Model
         // Хелпер: инвертировать направление (для чёрных фигур)
         protected int Direction()
         {
-            return Color == PieceColor.White ? 1 : -1;
+            return Color == PieceColor.White ? -1 : 1;
         }
 
         // Общий метод для проверки выхода за границы поля
@@ -46,7 +46,7 @@ namespace Chess.Model
         {
             return x >= 0 && x < 8 && y >= 0 && y < 8;
         }
-        public virtual char Symbol => 'F'; // Буква по умолчанию для абстрактной фигуры
+        public virtual string Symbol => "F"; // Буква по умолчанию для абстрактной фигуры
 
         // Метод для копирования фигуры (если захочется делать симуляции)
         public abstract Figure Clone();
@@ -63,9 +63,12 @@ namespace Chess.Model
         {
             hasMoved = false;
         }
-        public override char Symbol => 'P'; // Pawn
+        public override string Symbol => "P"; // Pawn
         public override bool CanMoveTo(int newX, int newY, Figure?[,] board)
         {
+            if (newX == X && newY == Y)
+                return false;
+
             int direction = Direction();
             int dx = newX - X;
             int dy = newY - Y;
@@ -122,9 +125,12 @@ namespace Chess.Model
         public Rook(int x, int y, PieceColor color) : base(x, y, color)
         {
         }
-        public override char Symbol => 'R'; // Rook
+        public override string Symbol => "R"; // Rook
         public override bool CanMoveTo(int newX, int newY, Figure?[,] board)
         {
+            if (newX == X && newY == Y)
+                return false;
+
             int dx = newX - X;
             int dy = newY - Y;
 
@@ -184,9 +190,12 @@ namespace Chess.Model
         public Queen(int x, int y, PieceColor color) : base(x, y, color)
         {
         }
-        public override char Symbol => 'Q'; // Queen
+        public override string Symbol => "Q"; // Queen
         public override bool CanMoveTo(int newX, int newY, Figure?[,] board)
         {
+            if (newX == X && newY == Y)
+                return false;
+
             int dx = newX - X;
             int dy = newY - Y;
 
@@ -264,9 +273,12 @@ namespace Chess.Model
         public Bishop(int x, int y, PieceColor color) : base(x, y, color)
         {
         }
-        public override char Symbol => 'B'; // Bishop
+        public override string Symbol => "B"; // Bishop
         public override bool CanMoveTo(int newX, int newY, Figure?[,] board)
         {
+            if (newX == X && newY == Y)
+                return false;
+
             int dx = newX - X;
             int dy = newY - Y;
 
@@ -320,9 +332,12 @@ namespace Chess.Model
         public Knight(int x, int y, PieceColor color) : base(x, y, color)
         {
         }
-        public override char Symbol => 'N'; // Knight (по шахматной нотации)
+        public override string Symbol => "N"; // Knight (по шахматной нотации)
         public override bool CanMoveTo(int newX, int newY, Figure?[,] board)
         {
+            if (newX == X && newY == Y)
+                return false;
+
             int dx = Math.Abs(newX - X);
             int dy = Math.Abs(newY - Y);
 
@@ -362,9 +377,12 @@ namespace Chess.Model
         {
             hasMoved = false;
         }
-        public override char Symbol => 'K'; // King
+        public override string Symbol => "K"; // King
         public override bool CanMoveTo(int newX, int newY, Figure?[,] board)
         {
+            if (newX == X && newY == Y)
+                return false;
+
             int dx = Math.Abs(newX - X);
             int dy = Math.Abs(newY - Y);
 

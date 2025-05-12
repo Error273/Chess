@@ -29,32 +29,32 @@ namespace Chess.Model
             //раставляем фигуры
             for (int x = 0; x < 8; x++)
             {
-                _board[x, 1] = new Pawn(x, 1, PieceColor.White);
-                _board[x, 6] = new Pawn(x, 6, PieceColor.Black);
+                _board[x, 1] = new Pawn(x, 1, PieceColor.Black);
+                _board[x, 6] = new Pawn(x, 6, PieceColor.White);
             }
 
-            _board[0, 0] = new Rook(0, 0, PieceColor.White);
-            _board[7, 0] = new Rook(7, 0, PieceColor.White);
-            _board[0, 7] = new Rook(0, 7, PieceColor.Black);
-            _board[7, 7] = new Rook(7, 7, PieceColor.Black);
+            _board[0, 0] = new Rook(0, 0, PieceColor.Black);
+            _board[7, 0] = new Rook(7, 0, PieceColor.Black);
+            _board[0, 7] = new Rook(0, 7, PieceColor.White);
+            _board[7, 7] = new Rook(7, 7, PieceColor.White);
 
-            _board[1, 0] = new Knight(1, 0, PieceColor.White);
-            _board[6, 0] = new Knight(6, 0, PieceColor.White);
-            _board[1, 7] = new Knight(1, 7, PieceColor.Black);
-            _board[6, 7] = new Knight(6, 7, PieceColor.Black);
+            _board[1, 0] = new Knight(1, 0, PieceColor.Black);
+            _board[6, 0] = new Knight(6, 0, PieceColor.Black);
+            _board[1, 7] = new Knight(1, 7, PieceColor.White);
+            _board[6, 7] = new Knight(6, 7, PieceColor.White);
 
-            _board[2, 0] = new Bishop(2, 0, PieceColor.White);
-            _board[5, 0] = new Bishop(5, 0, PieceColor.White);
-            _board[2, 7] = new Bishop(2, 7, PieceColor.Black);
-            _board[5, 7] = new Bishop(5, 7, PieceColor.Black);
+            _board[2, 0] = new Bishop(2, 0, PieceColor.Black);
+            _board[5, 0] = new Bishop(5, 0, PieceColor.Black);
+            _board[2, 7] = new Bishop(2, 7, PieceColor.White);
+            _board[5, 7] = new Bishop(5, 7, PieceColor.White);
 
-            _board[3, 0] = new Queen(3, 0, PieceColor.White);
-            _board[3, 7] = new Queen(3, 7, PieceColor.Black);
+            _board[3, 0] = new Queen(3, 0, PieceColor.Black);
+            _board[3, 7] = new Queen(3, 7, PieceColor.White);
 
-            _whiteKing = new King(4, 0, PieceColor.White);
-            _blackKing = new King(4, 7, PieceColor.Black);
-            _board[4, 0] = _whiteKing;
-            _board[4, 7] = _blackKing;
+            _blackKing = new King(4, 0, PieceColor.Black);
+            _whiteKing = new King(4, 7, PieceColor.White);
+            _board[4, 0] = _blackKing;
+            _board[4, 7] = _whiteKing;
         }
 
         //получаем фигуру по координатам
@@ -131,22 +131,27 @@ namespace Chess.Model
             _lastMove = new Move(fromX, fromY, toX, toY, figure);
 
 
-            PieceColor opponent = _currentPlayer == PieceColor.White ? PieceColor.Black : PieceColor.White;
+            _currentPlayer = _currentPlayer == PieceColor.White
+                            ? PieceColor.Black
+                            : PieceColor.White;
 
-            //проверка на мат
-            if (IsCheckmate(opponent))
+            bool inCheck = IsInCheck(_currentPlayer);
+            bool hasAnyMove = !IsStalemate(_currentPlayer)
+                               || inCheck;                
+
+
+            if (inCheck)
             {
-                _gameOver = true;
+                // если в шахе и нет ходов — мат
+                if (!hasAnyMove)
+                    _gameOver = true;
             }
-            // смена сторон
-            _currentPlayer = opponent;
-            //проверка на пат
-            if (IsStalemate(opponent))
+            else
             {
-                _gameOver = true;
+                // если не в шахе и нет ходов — пат
+                if (!hasAnyMove)
+                    _gameOver = true;
             }
-
-
 
             return true;
         }
