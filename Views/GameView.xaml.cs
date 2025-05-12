@@ -31,10 +31,13 @@ namespace chess_wpf_test.Views
             if (vm == null) return;
 
 
-            for (int row = 0; row < 8; row++)
+            for (int col = 0; col < 8; col++)
             {
-                for (int col = 0; col < 8; col++)
+                for (int row = 0; row < 8; row++)
                 {
+                    int r = row;
+                    int c = col;
+
                     var border = new Border
                     {
                         Background = (row + col) % 2 == 0 ? PinkBrush : GreenBrush,
@@ -44,7 +47,7 @@ namespace chess_wpf_test.Views
 
 
                     var cellGrid = new Grid();
-                    int vmIndex = row * 8 + col; // индекс фигуры в одномерном массиве Squares
+                    int vmIndex = r * 8 + c; // индекс фигуры в одномерном массиве Squares
 
                     var textBlock = new TextBlock 
                     {
@@ -59,6 +62,7 @@ namespace chess_wpf_test.Views
                         Height = 35,
                         RadiusX = 5,
                         RadiusY = 5,
+                        StrokeThickness = 3
                     };
 
                     // биндинг на символ фигуры
@@ -74,6 +78,12 @@ namespace chess_wpf_test.Views
                         Mode = System.Windows.Data.BindingMode.OneWay
                     };
                     // биндинг на цвет прямоугольника под фигурой
+                    var backgroundColorBinding = new System.Windows.Data.Binding($"Squares[{vmIndex}].BackgroundBrush")
+                    {
+                        Source = vm,
+                        Mode = System.Windows.Data.BindingMode.OneWay
+                    };
+                    // биндинг на подсветку выбранной фигуры
                     var highlightColorBinding = new System.Windows.Data.Binding($"Squares[{vmIndex}].HighlightBrush")
                     {
                         Source = vm,
@@ -82,16 +92,25 @@ namespace chess_wpf_test.Views
 
                     textBlock.SetBinding(TextBlock.TextProperty, textBinding);
                     textBlock.SetBinding(TextBlock.ForegroundProperty, symbolColorBinding);
-                    pieceRectangle.SetBinding(Rectangle.FillProperty, highlightColorBinding);
+                    pieceRectangle.SetBinding(Rectangle.FillProperty, backgroundColorBinding);
+                    pieceRectangle.SetBinding(Rectangle.StrokeProperty, highlightColorBinding);
 
                     cellGrid.Children.Add( pieceRectangle );
                     cellGrid.Children.Add( textBlock );
                     border.Child = cellGrid;
+
+                    // привязываем клики
+                    
+                    border.MouseLeftButtonDown += (s, e) =>
+                    {
+                        (DataContext as GameViewModel)?.OnSquareClicked(r, c);
+                    };
+
+                    
                     ChessBoard.Children.Add(border);
 
-                    // транспонирование, потому что wpf дурак
-                    Grid.SetRow(border, col);
-                    Grid.SetColumn(border, row);
+                    Grid.SetRow(border, c);
+                    Grid.SetColumn(border, r);
                 }
             }
         }
