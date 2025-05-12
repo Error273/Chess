@@ -35,8 +35,9 @@ namespace chess_wpf_test.Views
             {
                 for (int row = 0; row < 8; row++)
                 {
-                    int r = row;
-                    int c = col;
+                    int x = col;
+                    int y = row;
+                    int vmIndex = x * 8 + y;
 
                     var border = new Border
                     {
@@ -47,7 +48,6 @@ namespace chess_wpf_test.Views
 
 
                     var cellGrid = new Grid();
-                    int vmIndex = r * 8 + c; // индекс фигуры в одномерном массиве Squares
 
                     var textBlock = new TextBlock 
                     {
@@ -103,14 +103,14 @@ namespace chess_wpf_test.Views
                     
                     border.MouseLeftButtonDown += (s, e) =>
                     {
-                        (DataContext as GameViewModel)?.OnSquareClicked(r, c);
+                        (DataContext as GameViewModel)?.OnSquareClicked(x, y);
                     };
 
                     
                     ChessBoard.Children.Add(border);
 
-                    Grid.SetRow(border, c);
-                    Grid.SetColumn(border, r);
+                    Grid.SetRow(border, y);
+                    Grid.SetColumn(border, x);
                 }
             }
         }

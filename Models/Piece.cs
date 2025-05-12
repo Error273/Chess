@@ -38,7 +38,7 @@ namespace Chess.Model
         // Хелпер: инвертировать направление (для чёрных фигур)
         protected int Direction()
         {
-            return Color == PieceColor.White ? 1 : -1;
+            return Color == PieceColor.White ? -1 : 1;
         }
 
         // Общий метод для проверки выхода за границы поля
@@ -66,6 +66,9 @@ namespace Chess.Model
         public override string Symbol => "P"; // Pawn
         public override bool CanMoveTo(int newX, int newY, Figure?[,] board)
         {
+            if (newX == X && newY == Y)
+                return false;
+
             int direction = Direction();
             int dx = newX - X;
             int dy = newY - Y;
@@ -125,6 +128,9 @@ namespace Chess.Model
         public override string Symbol => "R"; // Rook
         public override bool CanMoveTo(int newX, int newY, Figure?[,] board)
         {
+            if (newX == X && newY == Y)
+                return false;
+
             int dx = newX - X;
             int dy = newY - Y;
 
@@ -187,6 +193,9 @@ namespace Chess.Model
         public override string Symbol => "Q"; // Queen
         public override bool CanMoveTo(int newX, int newY, Figure?[,] board)
         {
+            if (newX == X && newY == Y)
+                return false;
+
             int dx = newX - X;
             int dy = newY - Y;
 
@@ -267,6 +276,9 @@ namespace Chess.Model
         public override string Symbol => "B"; // Bishop
         public override bool CanMoveTo(int newX, int newY, Figure?[,] board)
         {
+            if (newX == X && newY == Y)
+                return false;
+
             int dx = newX - X;
             int dy = newY - Y;
 
@@ -323,6 +335,9 @@ namespace Chess.Model
         public override string Symbol => "N"; // Knight (по шахматной нотации)
         public override bool CanMoveTo(int newX, int newY, Figure?[,] board)
         {
+            if (newX == X && newY == Y)
+                return false;
+
             int dx = Math.Abs(newX - X);
             int dy = Math.Abs(newY - Y);
 
@@ -365,6 +380,9 @@ namespace Chess.Model
         public override string Symbol => "K"; // King
         public override bool CanMoveTo(int newX, int newY, Figure?[,] board)
         {
+            if (newX == X && newY == Y)
+                return false;
+
             int dx = Math.Abs(newX - X);
             int dy = Math.Abs(newY - Y);
 

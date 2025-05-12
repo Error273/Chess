@@ -51,10 +51,10 @@ namespace Chess.Model
             _board[3, 0] = new Queen(3, 0, PieceColor.Black);
             _board[3, 7] = new Queen(3, 7, PieceColor.White);
 
-            _whiteKing = new King(4, 0, PieceColor.Black);
-            _blackKing = new King(4, 7, PieceColor.White);
-            _board[4, 0] = _whiteKing;
-            _board[4, 7] = _blackKing;
+            _blackKing = new King(4, 0, PieceColor.Black);
+            _whiteKing = new King(4, 7, PieceColor.White);
+            _board[4, 0] = _blackKing;
+            _board[4, 7] = _whiteKing;
         }
 
         //получаем фигуру по координатам
@@ -131,22 +131,27 @@ namespace Chess.Model
             _lastMove = new Move(fromX, fromY, toX, toY, figure);
 
 
-            PieceColor opponent = _currentPlayer == PieceColor.White ? PieceColor.Black : PieceColor.White;
+            _currentPlayer = _currentPlayer == PieceColor.White
+                            ? PieceColor.Black
+                            : PieceColor.White;
 
-            //проверка на мат
-            if (IsCheckmate(opponent))
+            bool inCheck = IsInCheck(_currentPlayer);
+            bool hasAnyMove = !IsStalemate(_currentPlayer)
+                               || inCheck;                
+
+
+            if (inCheck)
             {
-                _gameOver = true;
+                // если в шахе и нет ходов — мат
+                if (!hasAnyMove)
+                    _gameOver = true;
             }
-            // смена сторон
-            _currentPlayer = opponent;
-            //проверка на пат
-            if (IsStalemate(opponent))
+            else
             {
-                _gameOver = true;
+                // если не в шахе и нет ходов — пат
+                if (!hasAnyMove)
+                    _gameOver = true;
             }
-
-
 
             return true;
         }
