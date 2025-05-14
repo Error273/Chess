@@ -13,7 +13,6 @@ namespace chess_wpf_test.Views
     public partial class MainMenuView : UserControl
     {
         private DispatcherTimer _timer;
-        private MediaPlayer _mediaPlayer = new MediaPlayer();
 
         public MainMenuView()
         {
@@ -24,29 +23,6 @@ namespace chess_wpf_test.Views
             ExitBtn.Click += ExitBtn_Click;
 
             Loaded += OnViewLoaded;
-            InitializeMediaPlayer();
-        }
-
-        private void InitializeMediaPlayer()
-        {
-            try
-            {
-                string baseDir = AppDomain.CurrentDomain.BaseDirectory;
-                string filePath = System.IO.Path.Combine(baseDir, "Assets", "background.mp3");
-
-                _mediaPlayer.Open(new Uri(filePath, UriKind.Absolute));
-                _mediaPlayer.Volume = 0.3;
-                _mediaPlayer.MediaEnded += (s, e) =>
-                {
-                    _mediaPlayer.Position = TimeSpan.Zero;
-                    _mediaPlayer.Play();
-                };
-                _mediaPlayer.Play();
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"Error playing music: {ex.Message}");
-            }
         }
 
         private void OnViewLoaded(object sender, RoutedEventArgs e)
@@ -106,7 +82,6 @@ namespace chess_wpf_test.Views
             {
                 var gameView = new GameView();
                 var parentWindow = Window.GetWindow(this);
-
                 if (parentWindow != null)
                 {
                     parentWindow.Content = gameView;
@@ -117,16 +92,17 @@ namespace chess_wpf_test.Views
                 Debug.WriteLine($"Error navigating to GameView: {ex.Message}");
             }
         }
+
         private void ExitBtn_Click(object sender, RoutedEventArgs e)
         {
             Debug.WriteLine("Exit button clicked");
             _timer?.Stop();
-            _mediaPlayer.Stop();
-            _mediaPlayer.Close();
+
             HappyCatImage.BeginAnimation(OpacityProperty, null);
             SadCatImage.BeginAnimation(OpacityProperty, null);
             HappyCatImage.Visibility = Visibility.Collapsed;
             ShowCat(SadCatImage);
+
             _timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(3) };
             _timer.Tick += (s, args) =>
             {

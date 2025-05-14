@@ -283,6 +283,10 @@ namespace Chess.Model
                 Console.WriteLine(p);
             }
         }
+        public bool IsCheckmate()
+        {
+            return IsCheckmate(CurrentPlayer);
+        }
     }
 
     public class Move
