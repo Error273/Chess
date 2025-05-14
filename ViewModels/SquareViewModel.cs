@@ -26,7 +26,7 @@ namespace chess_wpf_test.ViewModels
                     OnPropertyChanged(nameof(Figure));
                     OnPropertyChanged(nameof(DisplaySymbol));
                     OnPropertyChanged(nameof(SymbolBrush));
-                    OnPropertyChanged(nameof(BackgroundBrush));
+                    //OnPropertyChanged(nameof(BackgroundBrush));
                     OnPropertyChanged(nameof(HighlightBrush));
                 }
             }
@@ -42,12 +42,12 @@ namespace chess_wpf_test.ViewModels
                 }
                 return _figure.Symbol switch
                 {
-                    "K" => "♔",
-                    "Q" => "♕",
-                    "R" => "♖",
-                    "B" => "♗",
-                    "N" => "♘",
-                    "P" => "♙",
+                    "K" => "♚",
+                    "Q" => "♛",
+                    "R" => "♜",
+                    "B" => "♝",
+                    "N" => "♞",
+                    "P" => "♟",
                     _ => ""
                 };
             }
@@ -74,9 +74,10 @@ namespace chess_wpf_test.ViewModels
             Figure != null ?
             (Figure.Color == PieceColor.White ? Brushes.Black : Brushes.White) : Brushes.Transparent;
         // кисть которой рисуется фон (основной цвет фигуры)
-        public Brush BackgroundBrush =>
-            Figure != null ?
-            (Figure.Color == PieceColor.White ? Brushes.White: Brushes.Black) : Brushes.Transparent;
+        //public Brush BackgroundBrush =>
+        //    Figure != null ?
+        //    (Figure.Color == PieceColor.White ? Brushes.White: Brushes.Black) : Brushes.Transparent;
+
         // кисть подсветки
         public Brush HighlightBrush =>
             Figure != null && isHighlighted ? Brushes.Red : Brushes.Transparent;
