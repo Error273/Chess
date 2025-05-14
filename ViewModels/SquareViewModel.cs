@@ -47,7 +47,7 @@ namespace chess_wpf_test.ViewModels
                     "R" => "♜",
                     "B" => "♝",
                     "N" => "♞",
-                    "P" => "♟",
+                    "P" => "♙",
                     _ => ""
                 };
             }
@@ -72,7 +72,9 @@ namespace chess_wpf_test.ViewModels
         // кисть которой рисуется символ (противоположный цвет)
         public Brush SymbolBrush =>
             Figure != null ?
-            (Figure.Color == PieceColor.White ? Brushes.Black : Brushes.White) : Brushes.Transparent;
+            (Figure.Color == PieceColor.White ? (Brush)(new SolidColorBrush((Color)ColorConverter.ConvertFromString("#556b2f"))) : (Brush)(new SolidColorBrush((Color)ColorConverter.ConvertFromString("#DA3287"))))
+            : Brushes.Transparent;
+
         // кисть которой рисуется фон (основной цвет фигуры)
         //public Brush BackgroundBrush =>
         //    Figure != null ?
@@ -80,7 +82,7 @@ namespace chess_wpf_test.ViewModels
 
         // кисть подсветки
         public Brush HighlightBrush =>
-            Figure != null && isHighlighted ? Brushes.Red : Brushes.Transparent;
+            Figure != null && isHighlighted ? Brushes.White : Brushes.Transparent;
 
 
         public SquareViewModel(Figure figure)

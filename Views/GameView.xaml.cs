@@ -13,9 +13,10 @@ namespace chess_wpf_test.Views
 {
     public partial class GameView : UserControl
     {
-        
-        private readonly SolidColorBrush PinkBrush = new SolidColorBrush(Color.FromRgb(255, 181, 197));
-        private readonly SolidColorBrush GreenBrush = new SolidColorBrush(Color.FromRgb(46, 139, 87));
+
+        private readonly SolidColorBrush PinkBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FDBDBA"));
+        private readonly SolidColorBrush GreenBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ADDFAD"));
+
 
         public GameView()
         {
