@@ -128,5 +128,25 @@ namespace chess_wpf_test.Views
             BoardViewbox.Width = 400 * scale;
             BoardViewbox.Height = 400 * scale;
         }
+        public void ShowGameOverMessage(string message, string backgroundColor, string foregroundColor)
+        {
+            GameOverText.Text = message;
+            GameOverText.Foreground = (Brush)(new BrushConverter().ConvertFromString(foregroundColor));
+            GameOverBorder.Background = (Brush)(new BrushConverter().ConvertFromString(backgroundColor));
+
+            GameOverBorder.Visibility = Visibility.Visible;
+
+            var fadeIn = new System.Windows.Media.Animation.DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
+            GameOverBorder.BeginAnimation(UIElement.OpacityProperty, fadeIn);
+        }
+        private void MenuButton_Click(object sender, RoutedEventArgs e)
+        {
+            var mainMenu = new MainMenuView();
+            var parentWindow = Window.GetWindow(this);
+            if (parentWindow != null)
+            {
+                parentWindow.Content = mainMenu;
+            }
+        }
     }
 }
