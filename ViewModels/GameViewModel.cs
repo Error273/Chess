@@ -1,7 +1,8 @@
-﻿using Chess.Model;
+﻿// ViewModels/GameViewModel.cs
+using Chess.Model;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Windows;
+using System.Windows;   
 
 namespace chess_wpf_test.ViewModels
 {
@@ -11,21 +12,33 @@ namespace chess_wpf_test.ViewModels
         private int? _selectedX;
         private int? _selectedY;
 
+
+
+        // одномерный массив клеток - нужен для того чтобы нормально работала привязка
         public ObservableCollection<SquareViewModel> Squares { get; }
 
-        public Board GameBoard => _board;
+        public Board GameBoard
+        {
+            get => _board;
+        }
 
         public GameViewModel()
         {
+            // заполняем squares фигурами из Board
             Squares = new ObservableCollection<SquareViewModel>();
             for (int i = 0; i < 8; i++)
+            {
                 for (int j = 0; j < 8; j++)
+                {
                     Squares.Add(new SquareViewModel(_board.GetFigureAt(i, j)));
+                }
+            }
         }
 
         public void OnSquareClicked(int x, int y)
         {
             var figure = _board.GetFigureAt(x, y);
+
 
             if (_selectedX == null)
             {
@@ -40,14 +53,11 @@ namespace chess_wpf_test.ViewModels
             {
                 int fromX = _selectedX.Value;
                 int fromY = _selectedY.Value;
-                HighlightSquare(fromX, fromY, false);
-
                 bool moved = _board.MakeMove(fromX, fromY, x, y);
-
+                HighlightSquare(fromX, fromY, false);
                 if (moved)
                 {
-                    UpdateSquare(fromX, fromY);
-                    UpdateSquare(x, y);
+                    UpdateAllSquares();
 
                     if (_board.IsCheckmate())
                     {
@@ -67,10 +77,22 @@ namespace chess_wpf_test.ViewModels
                         });
                     }
                 }
-
                 _selectedX = _selectedY = null;
             }
         }
+        private void UpdateAllSquares()
+        {
+            for (int i = 0; i < 8; i++)
+            {
+                for (int j = 0; j < 8; j++)
+                {
+                    int ind = i * 8 + j;
+                    Squares[ind].Figure = _board.GetFigureAt(i, j);
+                }
+            }
+        }
+
+
 
         private void UpdateSquare(int x, int y)
         {
@@ -83,6 +105,7 @@ namespace chess_wpf_test.ViewModels
             int ind = x * 8 + y;
             Squares[ind].isHighlighted = on;
         }
+
 
         public event PropertyChangedEventHandler? PropertyChanged;
     }
