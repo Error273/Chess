@@ -234,6 +234,16 @@ namespace Chess.Model
             return true;
         }
 
+        public bool CanMove(int fromX, int fromY, int toX, int toY)
+        {
+            Figure? figure = GetFigureAt(fromX, fromY);
+            if (figure == null || figure.Color != _currentPlayer)
+                return false;
+
+            // Проверяем только правила движения фигуры, без шаха
+            return figure.CanMoveTo(toX, toY, _board);
+        }
+
 
         public bool IsSquareUnderAttack(int x, int y, PieceColor byColor)
         {

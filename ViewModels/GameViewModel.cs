@@ -46,6 +46,17 @@ namespace chess_wpf_test.ViewModels
                 _selectedX = x;
                 _selectedY = y;
                 HighlightSquare(x, y, true);
+                for (int i = 0; i < 8; i++) {
+                    for (int j = 0; j < 8; j++)
+                    {
+                        if (_board.CanMove(x, y, i, j))
+                        {
+                            HighlightSquare(i, j, true);
+                        }
+                    }
+                }
+                    
+                        //HighlightAllSquares(true);
                 return;
             }
 
@@ -53,6 +64,9 @@ namespace chess_wpf_test.ViewModels
             {
                 int fromX = _selectedX.Value;
                 int fromY = _selectedY.Value;
+                HighlightSquare(fromX, fromY, false);
+                HighlightAllSquares(false);
+
                 bool moved = _board.MakeMove(fromX, fromY, x, y);
                 HighlightSquare(fromX, fromY, false);
                 if (moved)
@@ -102,8 +116,18 @@ namespace chess_wpf_test.ViewModels
 
         private void HighlightSquare(int x, int y, bool on)
         {
+            //int ind = 0;
+            //for (int i = 0; i < 8; i++)
+            //    for (int j = 0; j < 8; j++)
+            //        ind = i * 8 + j;
+            //        Squares[ind].isHighlighted = on;
             int ind = x * 8 + y;
             Squares[ind].isHighlighted = on;
+        }
+        private void HighlightAllSquares(bool on)
+        {
+            foreach (var square in Squares)
+                square.isHighlighted = on;
         }
 
 

@@ -81,8 +81,15 @@ namespace chess_wpf_test.ViewModels
         //    (Figure.Color == PieceColor.White ? Brushes.White: Brushes.Black) : Brushes.Transparent;
 
         // кисть подсветки
+
+        //public Brush HighlightBrush =>
+        //    Figure != null && isHighlighted ? Brushes.White : Brushes.Transparent;
+
+        //public Brush HighlightBrush => Brushes.White;
+
         public Brush HighlightBrush =>
-            Figure != null && isHighlighted ? Brushes.White : Brushes.Transparent;
+            isHighlighted ? Brushes.White : Brushes.Transparent;
+
 
 
         public SquareViewModel(Figure figure)
