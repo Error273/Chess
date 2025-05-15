@@ -103,7 +103,6 @@ namespace Chess.Model
 
         public bool MakeMove(int fromX, int fromY, int toX, int toY)
         {
-
             if (_gameOver)
                 return false;
 
@@ -111,10 +110,101 @@ namespace Chess.Model
             if (figure == null || figure.Color != _currentPlayer)
                 return false;
 
+            // --- ТОПОРНАЯ РЕАЛИЗАЦИЯ РОКИРОВКИ ---
+            // Белые короткая (e1 -> h1)
+            if (fromX == 4 && fromY == 7 && toX == 7 && toY == 7)
+            {
+                if (_board[4, 7] is King wk &&
+                    _board[7, 7] is Rook wr &&
+                    _board[5, 7] == null &&
+                    _board[6, 7] == null &&
+                    !IsSquareUnderAttack(4, 7, PieceColor.Black))
+                {
+                    _board[4, 7] = null;
+                    _board[7, 7] = null;
+                    _board[6, 7] = wk;
+                    _board[5, 7] = wr;
+                    wk.MoveTo(6, 7);
+                    wr.MoveTo(5, 7);
+                    _whiteKing = wk;
+                    _currentPlayer = PieceColor.Black;
+                    _lastMove = new Move(4, 7, 7, 7, wk);
+                    return true;
+                }
+            }
+
+            // Белые длинная (e1 -> a1)
+            if (fromX == 4 && fromY == 7 && toX == 0 && toY == 7)
+            {
+                if (_board[4, 7] is King wk &&
+                    _board[0, 7] is Rook wr &&
+                    _board[1, 7] == null &&
+                    _board[2, 7] == null &&
+                    _board[3, 7] == null &&
+                    !IsSquareUnderAttack(4, 7, PieceColor.Black))
+                {
+                    _board[4, 7] = null;
+                    _board[0, 7] = null;
+                    _board[2, 7] = wk;
+                    _board[3, 7] = wr;
+                    wk.MoveTo(2, 7);
+                    wr.MoveTo(3, 7);
+                    _whiteKing = wk;
+                    _currentPlayer = PieceColor.Black;
+                    _lastMove = new Move(4, 7, 0, 7, wk);
+                    return true;
+                }
+            }
+
+            // Чёрные короткая (e8 -> h8)
+            if (fromX == 4 && fromY == 0 && toX == 7 && toY == 0)
+            {
+                if (_board[4, 0] is King bk &&
+                    _board[7, 0] is Rook br &&
+                    _board[5, 0] == null &&
+                    _board[6, 0] == null &&
+                    !IsSquareUnderAttack(4, 0, PieceColor.White))
+                {
+                    _board[4, 0] = null;
+                    _board[7, 0] = null;
+                    _board[6, 0] = bk;
+                    _board[5, 0] = br;
+                    bk.MoveTo(6, 0);
+                    br.MoveTo(5, 0);
+                    _blackKing = bk;
+                    _currentPlayer = PieceColor.White;
+                    _lastMove = new Move(4, 0, 7, 0, bk);
+                    return true;
+                }
+            }
+
+            // Чёрные длинная (e8 -> a8)
+            if (fromX == 4 && fromY == 0 && toX == 0 && toY == 0)
+            {
+                if (_board[4, 0] is King bk &&
+                    _board[0, 0] is Rook br &&
+                    _board[1, 0] == null &&
+                    _board[2, 0] == null &&
+                    _board[3, 0] == null &&
+                    !IsSquareUnderAttack(4, 0, PieceColor.White))
+                {
+                    _board[4, 0] = null;
+                    _board[0, 0] = null;
+                    _board[2, 0] = bk;
+                    _board[3, 0] = br;
+                    bk.MoveTo(2, 0);
+                    br.MoveTo(3, 0);
+                    _blackKing = bk;
+                    _currentPlayer = PieceColor.White;
+                    _lastMove = new Move(4, 0, 0, 0, bk);
+                    return true;
+                }
+            }
+
+            // --- ОБЫЧНЫЙ ХОД ---
             if (!IsValidMove(fromX, fromY, toX, toY))
                 return false;
 
-            // смена пешки на ферзя
             if (figure is Pawn && (toY == 0 || toY == 7))
             {
                 _board[fromX, fromY] = null;
@@ -122,7 +212,6 @@ namespace Chess.Model
             }
             else
             {
-                // движение фигуры
                 _board[fromX, fromY] = null;
                 figure.MoveTo(toX, toY);
                 _board[toX, toY] = figure;
@@ -130,28 +219,17 @@ namespace Chess.Model
 
             _lastMove = new Move(fromX, fromY, toX, toY, figure);
 
-
             _currentPlayer = _currentPlayer == PieceColor.White
                             ? PieceColor.Black
                             : PieceColor.White;
 
             bool inCheck = IsInCheck(_currentPlayer);
-            bool hasAnyMove = !IsStalemate(_currentPlayer)
-                               || inCheck;                
+            bool hasAnyMove = !IsStalemate(_currentPlayer) || inCheck;
 
-
-            if (inCheck)
-            {
-                // если в шахе и нет ходов — мат
-                if (!hasAnyMove)
-                    _gameOver = true;
-            }
-            else
-            {
-                // если не в шахе и нет ходов — пат
-                if (!hasAnyMove)
-                    _gameOver = true;
-            }
+            if (inCheck && !hasAnyMove)
+                _gameOver = true;
+            else if (!inCheck && !hasAnyMove)
+                _gameOver = true;
 
             return true;
         }
@@ -295,8 +373,14 @@ namespace Chess.Model
             }
         }
         public bool IsCheckmate()
+
+
         {
+
+
             return IsCheckmate(CurrentPlayer);
+
+
         }
     }
 
